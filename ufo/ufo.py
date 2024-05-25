@@ -45,19 +45,19 @@ def main():
                 break
 
         while status.upper() not in ["FINISH", "ERROR"] and step <= configs["MAX_STEP"]:
-            session.process_application_selection()
+            session.process_application_selection() #수정
             step = session.get_step()
             status = session.get_status()
 
             while status.upper() not in ["FINISH", "ERROR"] and step <= configs["MAX_STEP"]:
-                session.process_action_selection()
+                session.process_action_selection() #수정
                 status = session.get_status()
                 step = session.get_step()
 
                 if status == "APP_SELECTION":
                     print_with_color(
                         "Step {step}: Switching to New Application".format(step=step), "magenta")
-                    app_window = session.get_application_window()
+                    app_window = session.get_application_window() #수정
                     app_window.minimize()
                     break
 
