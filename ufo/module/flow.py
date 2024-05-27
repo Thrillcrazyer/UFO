@@ -14,11 +14,12 @@ from ..rag import retriever_factory
 from ..config.config import load_config
 from ..llm import llm_call
 from ..prompter.agent_prompter import ApplicationAgentPrompter, ActionAgentPrompter
-from ..ui_control import control, screenshot as screen
+from ..ui_control import control, screenshot as screen ## 수정사항 1 => UI Control 하는거 로봇 Control 로 변경해야 함
 from ..ui_control.executor import ActionExecutor
 from ..utils import (create_folder, encode_image_from_path,
                      generate_function_call, json_parser, print_with_color,
                      revise_line_breaks, yes_or_no)
+from ..robot_control import robot
 
 configs = load_config()
 BACKEND = configs["CONTROL_BACKEND"]
@@ -82,18 +83,21 @@ Please enter your request to be completed🛸: """.format(art=text2art("UFO"))
         
         # Code for selecting an action
         print_with_color("Step {step}: Selecting an application.".format(step=self.step), "magenta")
-        desktop_save_path = self.log_path + f"action_step{self.step}.png"
-        _ = screen.capture_screenshot_multiscreen(desktop_save_path)
-        desktop_screen_url = encode_image_from_path(desktop_save_path)
+        robot_view_save_path = self.log_path + f"action_step{self.step}.png"
+        _ = robot.capture_frame(robot_view_save_path) ## 이부분 수정해야 함. 로봇에서 데이터 가져오는 느낌으로 ㅇㅇ
+        
+        robot_view = encode_image_from_path(robot_view_save_path)
 
         self.results = ""
 
-        desktop_windows_dict, desktop_windows_info = control.get_desktop_app_info_dict()
+        #desktop_windows_dict, desktop_windows_info = control.get_desktop_app_info_dict() ## 윈도우에서 로봇으로 또 변경
+        #어짜피 로봇에서는 dict,info 가 고정되어 있는 테스크임.
+        robot_dict, robot_info = robot.get_robot_info_dict()
 
 
-        app_selection_prompt_system_message = self.app_selection_prompter.system_prompt_construction()
-        app_selection_prompt_user_message = self.app_selection_prompter.user_content_construction([desktop_screen_url], self.request_history, self.action_history, 
-                                                                                                  desktop_windows_info, self.plan, self.request)
+        app_selection_prompt_system_message = self.app_selection_prompter.system_prompt_construction() ## 로봇으로 변경
+        app_selection_prompt_user_message = self.app_selection_prompter.user_content_construction([robot_view], self.request_history, self.action_history, 
+                                                                                                  robot_info, self.plan, self.request) ## 로봇으로 변경
         
         app_selection_prompt_message = self.app_selection_prompter.prompt_construction(app_selection_prompt_system_message, app_selection_prompt_user_message)
 
@@ -144,7 +148,7 @@ Please enter your request to be completed🛸: """.format(art=text2art("UFO"))
                 response_json = self.set_result_and_log("", response_json)
                 return
                 
-            app_window = desktop_windows_dict[application_label]
+            app_window = robot_dict[application_label] ## 이부분도 로봇으로 변경해야 함.
 
             self.app_root = control.get_application_name(app_window)
             response_json["Application"] = self.app_root
@@ -201,15 +205,15 @@ Please enter your request to be completed🛸: """.format(art=text2art("UFO"))
         """
 
         print_with_color("Step {step}: Taking an action on application {application}.".format(step=self.step, application=self.application), "magenta")
-        screenshot_save_path = self.log_path + f"action_step{self.step}.png"
-        annotated_screenshot_save_path = self.log_path + f"action_step{self.step}_annotated.png"
-        concat_screenshot_save_path = self.log_path + f"action_step{self.step}_concat.png"
-        control_screenshot_save_path = self.log_path + f"action_step{self.step}_selected_controls.png"
+        robot_view_save_path = self.log_path + f"action_step{self.step}.png"
+        annotated_robot_view_save_path = self.log_path + f"action_step{self.step}_annotated.png"
+        concat_robot_view_save_path = self.log_path + f"action_step{self.step}_concat.png"
+        control_robot_view_save_path = self.log_path + f"action_step{self.step}_selected_controls.png"
 
         if type(self.control_reannotate) == list and len(self.control_reannotate) > 0:
             control_list = self.control_reannotate
         else:
-            control_list = control.find_control_elements_in_descendants(self.app_window, configs["CONTROL_TYPE_LIST"])
+            control_list = robot.find_control_elements_in_descendants(self.app_window, configs["CONTROL_TYPE_LIST"]) 
 
         if self.app_window == None:
             self.status = "ERROR"
@@ -218,7 +222,7 @@ Please enter your request to be completed🛸: """.format(art=text2art("UFO"))
 
 
             
-        annotation_dict, _, _ = screen.control_annotations(self.app_window, screenshot_save_path, annotated_screenshot_save_path, control_list, anntation_type="number")
+        annotation_dict, _, _ = screen.control_annotations(self.app_window, robot_view_save_path, annotated_robot_view_save_path, control_list, anntation_type="number")
         control_info = control.get_control_info_dict(annotation_dict, ["control_text", "control_type" if BACKEND == "uia" else "control_class"])
 
         image_url = []
@@ -230,11 +234,11 @@ Please enter your request to be completed🛸: """.format(art=text2art("UFO"))
             image_url += [encode_image_from_path(last_control_screenshot_save_path if os.path.exists(last_control_screenshot_save_path) else last_screenshot_save_path)]
 
         if configs["CONCAT_SCREENSHOT"]:
-            screen.concat_images_left_right(screenshot_save_path, annotated_screenshot_save_path, concat_screenshot_save_path)
-            image_url += [encode_image_from_path(concat_screenshot_save_path)]
+            screen.concat_images_left_right(robot_view_save_path, annotated_robot_view_save_path, concat_robot_view_save_path)
+            image_url += [encode_image_from_path(concat_robot_view_save_path)]
         else:
-            screenshot_url = encode_image_from_path(screenshot_save_path)
-            screenshot_annotated_url = encode_image_from_path(annotated_screenshot_save_path)
+            screenshot_url = encode_image_from_path(robot_view_save_path)
+            screenshot_annotated_url = encode_image_from_path(annotated_robot_view_save_path)
             image_url += [screenshot_url, screenshot_annotated_url]
 
         if configs["RAG_EXPERIENCE"]:
@@ -484,7 +488,6 @@ Please enter your request to be completed🛸: """.format(art=text2art("UFO"))
         """
         return self.app_window
     
-
     def set_result_and_log(self, result, response_json):
         """
         Set the result of the session, and log the result.
