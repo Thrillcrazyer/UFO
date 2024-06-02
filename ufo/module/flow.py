@@ -64,9 +64,9 @@ class Session(object):
         self.control_reannotate = None
 
         welcome_text = """
-Welcome to use UFO🛸, A UI-focused Agent for Windows OS Interaction. 
+Welcome to use KMOU Robo🛸, A Decision Maker for Robot Control System using LLM. 
 {art}
-Please enter your request to be completed🛸: """.format(art=text2art("UFO"))
+Please enter your request to be completed🛸: """.format(art=text2art("KMOU"))
 
         print_with_color(welcome_text, "cyan")
         
@@ -91,13 +91,13 @@ Please enter your request to be completed🛸: """.format(art=text2art("UFO"))
         self.results = ""
 
         #desktop_windows_dict, desktop_windows_info = control.get_desktop_app_info_dict() ## 윈도우에서 로봇으로 또 변경
-        #어짜피 로봇에서는 dict,info 가 고정되어 있는 테스크임.
+        #어짜피 로봇에서는 dict,info 가 고정되어 있는 테스크임. 그냥 바로 가져올수 있도록 코드를 변경할 수 있도록 합시다.
         robot_dict, robot_info = robot.get_robot_info_dict()
 
 
         app_selection_prompt_system_message = self.app_selection_prompter.system_prompt_construction() ## 로봇으로 변경
         app_selection_prompt_user_message = self.app_selection_prompter.user_content_construction([robot_view], self.request_history, self.action_history, 
-                                                                                                  robot_info, self.plan, self.request) ## 로봇으로 변경
+                                                                                                  robot_info, self.plan, self.request) ## 로봇으로 변경 
         
         app_selection_prompt_message = self.app_selection_prompter.prompt_construction(app_selection_prompt_system_message, app_selection_prompt_user_message)
 
