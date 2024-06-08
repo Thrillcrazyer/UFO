@@ -156,10 +156,9 @@ def generate_function_call(func, args):
     :return: The function call string.
     """
     # Format the arguments
-    args_str = ', '.join(f'{k}={v!r}' for k, v in args.items())
-
+    args_str = '/'.join(f'{v!r}' for k, v in args.items())
     # Return the function call string
-    return f'{func}({args_str})'
+    return f'{func}/{args_str}'.upper()
 
 
 def revise_line_breaks(args: dict):

@@ -1,25 +1,70 @@
+import socket
+import numpy as np
+import cv2
 
-
-def capture_frame(robot_save_path):
-    """_summary_
-    capture_screenshot_multiscreen 배껴놓은 코드
-    호출하면 로봇한테서 Frame을 호출하고 save_path에 저장한다.
-    """
-    return
-
-
-def find_control_elements_in_descendants(app_window, configs["CONTROL_TYPE_LIST"]):
+class robot_api(object):
+    def __init__(self,port=5000):
+        server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        server_socket.bind(('0.0.0.0', port))
+        server_socket.listen(1)
+        print("서버 대기 중...")
+        conn, addr = server_socket.accept()
+        print(f"연결됨: {addr}")
+        self.conn = conn
+        
+    def _call_image(self):
+        self.conn.send(b'REQUEST_IMAGE')
+        
+    def _call_distance(self):
+        self.conn.send(b'REQUEST_DISTANCE')
     
-    return
-
-def capture_screenshot_controls(app_window,[control_selected], control_screenshot_save_path):
+    def _receive_distance(self):
+        distance_info = self.conn.recv(16)
+        distance = float(distance_info.decode().strip())
+        return distance
     
-    return
-
-def get_robot_info_dict():
+    def _receive_frame(self):
+        size_info = self.conn.recv(16)
+        size = int(size_info.decode().strip())
+        data = b''
+        while len(data) < size:
+            packet = self.conn.recv(4096)
+            if not packet:
+                break
+            data += packet
+             
+        nparr = np.frombuffer(data, np.uint8)
+        frame = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
+        return frame
+    def get_data(self,command):
+        if command == "IMAGE":
+            self.call_image()
+            frame = self.receive_frame()
+            if frame is not None:
+                # Optionally resize the frame here if needed
+                frame_resized = cv2.resize(frame, (800, int(frame.shape[0] * (800 / frame.shape[1]))))
+                return frame_resized
+            return None
+        elif command == "DISTANCE":
+            self.call_distance()
+            return self.receive_distance()
+        else:
+            self.conn.sendall
+        return None
     
-    return
-
-def find_control_elements_in_descendants(self.app_window, configs["CONTROL_TYPE_LIST"]) :
-    
-    return
+    def capture_frame(self, robot_save_path):
+        """_summary_
+        capture_screenshot_multiscreen 배껴놓은 코드
+        호출하면 로봇한테서 Frame을 호출하고 save_path에 저장한다.
+        """
+        try:
+            # 프레임을 캡처합니다
+            frame = self.get_data("IMAGE")
+            # 이미지를 저장합니다
+            success = cv2.imwrite(robot_save_path, frame)
+            # 저장 성공 여부에 따라 True 또는 False를 반환합니다
+            return success
+        except Exception as e:
+            # 예외 발생 시 False를 반환합니다
+            print(f"Error: {e}")
+            return False

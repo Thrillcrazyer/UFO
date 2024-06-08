@@ -26,7 +26,6 @@ BACKEND = configs["CONTROL_BACKEND"]
 
 
 
-
 class Session(object):
     """
     A session for UFO.
@@ -62,6 +61,9 @@ class Session(object):
         self.online_doc_retriever = None
         self.experience_retriever = None
         self.control_reannotate = None
+        
+        # 추가한 로봇 API code
+        self.robot=robot.robot_api(port=5000)
 
         welcome_text = """
 Welcome to use KMOU Robo🛸, A Decision Maker for Robot Control System using LLM. 
@@ -84,20 +86,15 @@ Please enter your request to be completed🛸: """.format(art=text2art("KMOU"))
         # Code for selecting an action
         print_with_color("Step {step}: Selecting an application.".format(step=self.step), "magenta")
         robot_view_save_path = self.log_path + f"action_step{self.step}.png"
-        _ = robot.capture_frame(robot_view_save_path) ## 이부분 수정해야 함. 로봇에서 데이터 가져오는 느낌으로 ㅇㅇ
+        _ = self.robot.capture_frame(robot_view_save_path) ## 이부분 수정해야 함. 로봇에서 데이터 가져오는 느낌으로 ㅇㅇ
         
         robot_view = encode_image_from_path(robot_view_save_path)
 
         self.results = ""
 
-        #desktop_windows_dict, desktop_windows_info = control.get_desktop_app_info_dict() ## 윈도우에서 로봇으로 또 변경
-        #어짜피 로봇에서는 dict,info 가 고정되어 있는 테스크임. 그냥 바로 가져올수 있도록 코드를 변경할 수 있도록 합시다.
-        robot_dict, robot_info = robot.get_robot_info_dict()
-
-
         app_selection_prompt_system_message = self.app_selection_prompter.system_prompt_construction() ## 로봇으로 변경
         app_selection_prompt_user_message = self.app_selection_prompter.user_content_construction([robot_view], self.request_history, self.action_history, 
-                                                                                                  robot_info, self.plan, self.request) ## 로봇으로 변경 
+                                                                                                  self.plan, self.request) ## 로봇으로 변경 
         
         app_selection_prompt_message = self.app_selection_prompter.prompt_construction(app_selection_prompt_system_message, app_selection_prompt_user_message)
 
@@ -147,27 +144,13 @@ Please enter your request to be completed🛸: """.format(art=text2art("KMOU"))
                 response_json["Application"] = ""
                 response_json = self.set_result_and_log("", response_json)
                 return
-                
-            app_window = robot_dict[application_label] ## 이부분도 로봇으로 변경해야 함.
-
-            self.app_root = control.get_application_name(app_window)
+            
             response_json["Application"] = self.app_root
             response_json = self.set_result_and_log("", response_json)
 
-            try:
-                app_window.is_normal()
-
-            # Handle the case when the window interface is not available
-            except NoPatternInterfaceError as e:
-                self.error_logger(response_string, str(e))
-                print_with_color("Window interface {title} not available for the visual element.".format(title=self.application), "red")
-                self.status = "ERROR"
-                return
             
             self.status = "CONTINUE"
-            self.app_window = app_window
-
-            self.app_window.set_focus()
+            
 
             # Initialize the document retriever
             if configs["RAG_OFFLINE_DOCS"]:
@@ -208,22 +191,7 @@ Please enter your request to be completed🛸: """.format(art=text2art("KMOU"))
         robot_view_save_path = self.log_path + f"action_step{self.step}.png"
         annotated_robot_view_save_path = self.log_path + f"action_step{self.step}_annotated.png"
         concat_robot_view_save_path = self.log_path + f"action_step{self.step}_concat.png"
-        control_robot_view_save_path = self.log_path + f"action_step{self.step}_selected_controls.png"
 
-        if type(self.control_reannotate) == list and len(self.control_reannotate) > 0:
-            control_list = self.control_reannotate
-        else:
-            control_list = robot.find_control_elements_in_descendants(self.app_window, configs["CONTROL_TYPE_LIST"]) 
-
-        if self.app_window == None:
-            self.status = "ERROR"
-            print_with_color("Required Application window is not available.", "red")
-            return
-
-
-            
-        annotation_dict, _, _ = screen.control_annotations(self.app_window, robot_view_save_path, annotated_robot_view_save_path, control_list, anntation_type="number")
-        control_info = control.get_control_info_dict(annotation_dict, ["control_text", "control_type" if BACKEND == "uia" else "control_class"])
 
         image_url = []
 
@@ -247,9 +215,9 @@ Please enter your request to be completed🛸: """.format(art=text2art("KMOU"))
             examples = []
             tips = []
 
-        action_selection_prompt_system_message = self.act_selection_prompter.system_prompt_construction(examples, tips)
+        action_selection_prompt_system_message = self.act_selection_prompter.system_prompt_construction(examples, tips) # 수정해야 하는 사항들
         action_selection_prompt_user_message = self.act_selection_prompter.user_content_construction(image_url, self.request_history, self.action_history, 
-                                                                                                        control_info, self.plan, self.request, self.rag_prompt(), configs["INCLUDE_LAST_SCREENSHOT"])
+                                                                                                     self.plan, self.request, self.rag_prompt(), configs["INCLUDE_LAST_SCREENSHOT"]) # 이 함수도 수정해야 함.
         
         action_selection_prompt_message = self.act_selection_prompter.prompt_construction(action_selection_prompt_system_message, action_selection_prompt_user_message)
 
@@ -277,14 +245,10 @@ Please enter your request to be completed🛸: """.format(art=text2art("KMOU"))
             function_call = response_json["Function"]
             args = revise_line_breaks(response_json["Args"])
 
-            control_selected = annotation_dict.get(control_label, "")
-
-
-            # Build the executor for over the control item.
-            executor = ActionExecutor(control_selected, self.app_window)
-
             # Compose the function call and the arguments string.
-            action = generate_function_call(function_call, args)
+            action = generate_function_call(function_call, args) # 이 코드도 수정해야 함.
+            self.robot.get_data(action)
+            
 
             # Set the result and log the result.
             self.plan = response_json["Plan"]
@@ -312,41 +276,21 @@ Please enter your request to be completed🛸: """.format(art=text2art("KMOU"))
             print_with_color("Error occurs at step {step}".format(step=self.step), "red")
             print_with_color(str(e), "red")
             self.status = "ERROR"
-
             self.error_logger(response_string, str(e))
             
             return
         
         self.step += 1
 
-        # Handle the case when the control item is overlapped and the agent is unable to select the control item. Retake the annotated screenshot.
-        if "SCREENSHOT" in self.status.upper():
-            print_with_color("Annotation is overlapped and the agent is unable to select the control items. New annotated screenshot is taken.", "magenta")
-            self.control_reannotate = executor.annotation(args, annotation_dict)
-            return
-
-
         self.control_reannotate = None
             
-
         # The task is finished and no further action is needed
-        if self.status.upper() == "FINISH" and not control_selected:
+        if self.status.upper() == "FINISH":
             self.status = self.status.upper()
             response_json = self.set_result_and_log("", response_json)
             
             return
         
-        if not self.safe_guard(action, control_text):
-            return 
-        
-        # Take screenshot of the selected control
-        screen.capture_screenshot_controls(self.app_window, [control_selected], control_screenshot_save_path)
-
-
-        # Execute the action
-        results = executor.execution(function_call, args)  
-        response_json = self.set_result_and_log(results, response_json)
-
         time.sleep(configs["SLEEP_TIME"])
 
         return
