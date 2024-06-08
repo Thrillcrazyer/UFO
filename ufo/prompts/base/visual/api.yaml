@@ -66,3 +66,12 @@ CameraMove:
         - tilt: The vertical angle in degrees to which the camera should tilt. Valid range is typically from 0 to 180. 90 is the initial point.
     [3] Example: cameramove(pan=90,tilt:140)
     [4] Return: None
+
+Buzzer:
+  summary: |-
+    “Buzzer” makes the robot make a buzzer sound.
+  usage: |-
+    [1] API call: buzzer()
+    [2] Args: None
+    [3] Example: buzzer()
+    [4] Return: None

@@ -54,13 +54,6 @@ def main():
                 status = session.get_status()
                 step = session.get_step()
 
-                if status == "APP_SELECTION":
-                    print_with_color(
-                        "Step {step}: Switching to New Application".format(step=step), "magenta")
-                    app_window = session.get_application_window() #수정
-                    app_window.minimize()
-                    break
-
             if status == "FINISH":
                 print_with_color("Task Completed.", "magenta")
                 break
