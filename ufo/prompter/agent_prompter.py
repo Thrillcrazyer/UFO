@@ -35,7 +35,7 @@ class ApplicationAgentPrompter(BasicPrompter):
     
 
 
-    def user_prompt_construction(self, request_history: list, action_history: list, control_item: list, prev_plan: str, user_request: str, retrieved_docs: str="") -> str:
+    def user_prompt_construction(self, request_history: list, action_history: list, prev_plan: str, user_request: str, retrieved_docs: str="",control_item: list=[]) -> str:
         """
         Construct the prompt for action selection.
         :param action_history: The action history.
@@ -51,7 +51,7 @@ class ApplicationAgentPrompter(BasicPrompter):
     
 
 
-    def user_content_construction(self, image_list: list, request_history: list, action_history: list, control_item: list, prev_plan: str, user_request: str, retrieved_docs: str="") -> list[dict]:
+    def user_content_construction(self, image_list: list, request_history: list, action_history: list, prev_plan: str, user_request: str, retrieved_docs: str="") -> list[dict]:
         """
         Construct the prompt for LLMs.
         :param image_list: The list of images.
@@ -82,7 +82,7 @@ class ApplicationAgentPrompter(BasicPrompter):
 
         user_content.append({
             "type": "text",
-            "text": self.user_prompt_construction(request_history, action_history, control_item, prev_plan, user_request, retrieved_docs)
+            "text": self.user_prompt_construction(request_history, action_history, prev_plan, user_request, retrieved_docs)
         })
 
         return user_content

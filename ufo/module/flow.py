@@ -97,6 +97,10 @@ Please enter your request to be completed🛸: """.format(art=text2art("KMOU"))
                                                                                                   self.plan, self.request) ## 로봇으로 변경 
         
         app_selection_prompt_message = self.app_selection_prompter.prompt_construction(app_selection_prompt_system_message, app_selection_prompt_user_message)
+        
+        print("app_seliction_promt-------------------------------------------------")
+        print(app_selection_prompt_message)
+        print("-"*60)
 
         
         self.request_logger.debug(json.dumps({"step": self.step, "prompt": app_selection_prompt_message, "status": ""}))

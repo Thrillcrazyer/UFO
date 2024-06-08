@@ -11,9 +11,9 @@ SpeakText:
   summary: |-
     “SpeakText” is used to convey information to the user. To enter text you must use the 'text' argument.
   usage: |-
-    [1] API call: summary(text="")
+    [1] API call: speaktext(text="")
     [2] Args: None
-    [3] Example: summary(text="전방에 있는 물체는 사과인 것 같습니다.")
+    [3] Example: speaktext(text="전방에 있는 물체는 사과인 것 같습니다.")
     [4] Return: None
 
 CarBack:
@@ -38,22 +38,22 @@ CarForward:
 
 CarLeft:
   summary: |-
-    "CarForward" makes the robot move left.
+    "CarLeft" makes the robot move left.
   usage: |-
-    [1] API call: carleft(distance=0)
+    [1] API call: carleft(angle=0)
     [2] Args: 
-        - distance: distance is the distance you want to move. "distance = 1" means moving 1m.
-    [3] Example: carleft(distance=0.3)
+        - angle: angle is the angle you want to turn. "angle= 360" means turn 360.
+    [3] Example: carleft(angle= 130)
     [4] Return: None
 
 CarRight:
   summary: |-
-    "CarForward" makes the robot move right.
+    "CarRight" makes the robot move right.
   usage: |-
-    [1] API call: carright(distance=0)
+    [1] API call: carright(angle=0)
     [2] Args: 
-        - distance: distance is the distance you want to move. "distance = 1" means moving 1m.
-    [3] Example: carright(distance=1)
+        - angle: angle is the angle you want to turn. "angle= 360" means turn 360.
+    [3] Example: carright(angle=180)
     [4] Return: None
 
 CameraMove:

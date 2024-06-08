@@ -38,16 +38,16 @@ class robot_api(object):
         return frame
     def get_data(self,command):
         if command == "IMAGE":
-            self.call_image()
-            frame = self.receive_frame()
+            self._call_image()
+            frame = self._receive_frame()
             if frame is not None:
                 # Optionally resize the frame here if needed
                 frame_resized = cv2.resize(frame, (800, int(frame.shape[0] * (800 / frame.shape[1]))))
                 return frame_resized
             return None
         elif command == "DISTANCE":
-            self.call_distance()
-            return self.receive_distance()
+            self._call_distance()
+            return self._receive_distance()
         else:
             self.conn.sendall
         return None
