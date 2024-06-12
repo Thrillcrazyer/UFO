@@ -35,11 +35,7 @@ class ApplicationAgentPrompter(BasicPrompter):
     
 
 
-<<<<<<< HEAD
     def user_prompt_construction(self, request_history: list, action_history: list, prev_plan: str, user_request: str, retrieved_docs: str="",control_item: list=[]) -> str:
-=======
-    def user_prompt_construction(self, request_history: list, action_history: list, prev_plan: str, user_request: str, retrieved_docs: str="") -> str:
->>>>>>> 5afa1cbc39e5f5b2dfda8010601e1f2c149e478f
         """
         Construct the prompt for action selection.
         :param action_history: The action history.
@@ -48,7 +44,7 @@ class ApplicationAgentPrompter(BasicPrompter):
         :param retrieved_docs: The retrieved documents.
         return: The prompt for action selection.
         """
-        prompt = self.prompt_template["user"].format(action_history=json.dumps(action_history), request_history=json.dumps(request_history), 
+        prompt = self.prompt_template["user"].format(action_history=json.dumps(action_history), request_history=json.dumps(request_history), control_item=json.dumps(control_item),
                                              prev_plan=prev_plan, user_request=user_request, retrieved_docs=retrieved_docs)
         
         return prompt

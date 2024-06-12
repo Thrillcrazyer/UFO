@@ -49,7 +49,7 @@ class robot_api(object):
             self._call_distance()
             return self._receive_distance()
         else:
-            self.conn.sendall
+            self.conn.sendall(command.encode('utf-8'))
         return None
     
     def capture_frame(self, robot_save_path):

@@ -98,10 +98,6 @@ Please enter your request to be completed🛸: """.format(art=text2art("KMOU"))
         
         app_selection_prompt_message = self.app_selection_prompter.prompt_construction(app_selection_prompt_system_message, app_selection_prompt_user_message)
         
-        print("app_seliction_promt-------------------------------------------------")
-        print(app_selection_prompt_message)
-        print("-"*60)
-
         
         self.request_logger.debug(json.dumps({"step": self.step, "prompt": app_selection_prompt_message, "status": ""}))
 
@@ -120,8 +116,6 @@ Please enter your request to be completed🛸: """.format(art=text2art("KMOU"))
         try:
             response_json = json_parser(response_string)
 
-            application_label = response_json["ControlLabel"]
-            self.application = response_json["ControlText"]
             observation = response_json["Observation"]
             thought = response_json["Thought"]
             self.plan = response_json["Plan"]
@@ -130,31 +124,27 @@ Please enter your request to be completed🛸: """.format(art=text2art("KMOU"))
 
             print_with_color("Observations👀: {observation}".format(observation=observation), "cyan")
             print_with_color("Thoughts💡: {thought}".format(thought=thought), "green")
-            print_with_color("Selected application📲: {application}".format(application=self.application), "yellow")
             print_with_color("Next Plan📚: {plan}".format(plan=str(self.plan).replace("\\n", "\n")), "cyan")
             print_with_color("Comment💬: {comment}".format(comment=comment), "green")
             
             
             response_json["Step"] = self.step
             response_json["Round"] = self.round
-            response_json["ControlLabel"] = self.application
             response_json["Action"] = "set_focus()"
             response_json["Request"] = self.request
             response_json["Agent"] = "AppAgent"
         
-            
-            if "FINISH" in self.status.upper() or self.application == "":
+            if self.status.upper()=="FINISH":
                 self.status = "FINISH"
                 response_json["Application"] = ""
                 response_json = self.set_result_and_log("", response_json)
                 return
             
-            response_json["Application"] = self.app_root
-            response_json = self.set_result_and_log("", response_json)
+    
+            #response_json = self.set_result_and_log("", response_json)
 
             
             self.status = "CONTINUE"
-            
 
             # Initialize the document retriever
             if configs["RAG_OFFLINE_DOCS"]:
@@ -195,23 +185,16 @@ Please enter your request to be completed🛸: """.format(art=text2art("KMOU"))
         robot_view_save_path = self.log_path + f"action_step{self.step}.png"
         annotated_robot_view_save_path = self.log_path + f"action_step{self.step}_annotated.png"
         concat_robot_view_save_path = self.log_path + f"action_step{self.step}_concat.png"
-
+        _ = self.robot.capture_frame(robot_view_save_path) ## 이부분 수정해야 함. 로봇에서 데이터 가져오는 느낌으로 ㅇㅇ
 
         image_url = []
 
-        if configs["INCLUDE_LAST_SCREENSHOT"]:
             
-            last_screenshot_save_path = self.log_path + f"action_step{self.step - 1}.png"
-            last_control_screenshot_save_path = self.log_path + f"action_step{self.step - 1}_selected_controls.png"
-            image_url += [encode_image_from_path(last_control_screenshot_save_path if os.path.exists(last_control_screenshot_save_path) else last_screenshot_save_path)]
+        last_screenshot_save_path = self.log_path + f"action_step{self.step - 1}.png"
+        last_control_screenshot_save_path = self.log_path + f"action_step{self.step - 1}_selected_controls.png"
+        image_url += [encode_image_from_path(last_control_screenshot_save_path if os.path.exists(last_control_screenshot_save_path) else last_screenshot_save_path)]
 
-        if configs["CONCAT_SCREENSHOT"]:
-            screen.concat_images_left_right(robot_view_save_path, annotated_robot_view_save_path, concat_robot_view_save_path)
-            image_url += [encode_image_from_path(concat_robot_view_save_path)]
-        else:
-            screenshot_url = encode_image_from_path(robot_view_save_path)
-            screenshot_annotated_url = encode_image_from_path(annotated_robot_view_save_path)
-            image_url += [screenshot_url, screenshot_annotated_url]
+        
 
         if configs["RAG_EXPERIENCE"]:
             examples, tips = self.rag_experience_retrieve()
@@ -241,18 +224,15 @@ Please enter your request to be completed🛸: """.format(art=text2art("KMOU"))
 
         try:
             response_json = json_parser(response_string)
-
             observation = response_json["Observation"]
             thought = response_json["Thought"]
-            control_label = response_json["ControlLabel"]
-            control_text = response_json["ControlText"]
             function_call = response_json["Function"]
             args = revise_line_breaks(response_json["Args"])
 
             # Compose the function call and the arguments string.
             action = generate_function_call(function_call, args) # 이 코드도 수정해야 함.
-            self.robot.get_data(action)
             
+            self.robot.get_data(action)
 
             # Set the result and log the result.
             self.plan = response_json["Plan"]
@@ -268,7 +248,6 @@ Please enter your request to be completed🛸: """.format(art=text2art("KMOU"))
             # Log the response.
             print_with_color("Observations👀: {observation}".format(observation=observation), "cyan")
             print_with_color("Thoughts💡: {thought}".format(thought=thought), "green")
-            print_with_color("Selected item🕹️: {control_text}, Label: {label}".format(control_text=control_text, label=control_label), "yellow")
             print_with_color("Action applied⚒️: {action}".format(action=action), "blue")
             print_with_color("Status📊: {status}".format(status=self.status), "blue")
             print_with_color("Next Plan📚: {plan}".format(plan=str(self.plan).replace("\\n", "\n")), "cyan")

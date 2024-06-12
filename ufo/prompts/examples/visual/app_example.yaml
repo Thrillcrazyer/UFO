@@ -2,230 +2,155 @@ version: 1.0
 
 example1: 
   Request: |-
-    My name is Zac. Please send a email to jack@outlook.com to thanks his contribution on the open source.
+      주위에 있는 사람을 찾고 그 사람의 얼굴을 묘사해줘.
   Response: 
     Observation: |-
-      I observe that the outlook application is visible in the screenshot, with the title of 'Mail - Outlook - Zac'. I can see a list of emails in the application.
+      The current screenshot shows the lower part of an office chair and a desk. There are no visible people in the image.
     Thought: |-
-      I need to open the email application to send a email. According to the screenshot and the application information, I can see the Outlook application named as 'Mail - Outlook - Zac', so the application window do not need to be set focused. I need to open the 'Mail - Outlook - Zac' application to open it.
-    ControlLabel: |-
-      12
-    ControlText: |-
-      Mail - Outlook - Zac
+     To find a person in the vicinity, I need to move the camera to get a better view of the surroundings.
     Status: |-  
       CONTINUE
     Plan: |-
-      (1) Open the windows of outlook application.
-      (2) Input the email address of the receiver.
-      (3) Input the title of the email. I need to input 'Thanks for your contribution on the open source.'.
-      (4) Input the content of the email. I need to input 'Dear Jack,\\nI hope this message finds you well. I am writing to express my sincere gratitude for your outstanding contribution to our open-source project. Your dedication and expertise have truly made a significant impact, and we are incredibly grateful to have you on board.\\nYour commitment to the open-source community has not gone unnoticed, and your recent contributions have been instrumental in enhancing the functionality and quality of our project. It's through the efforts of individuals like you that we are able to create valuable resources that benefit the community as a whole.\\nYour code reviews, bug fixes, and innovative ideas have not only improved the project but have also inspired others to contribute their best. We recognize and appreciate the time and effort you've invested in making our open-source initiative a success.\\nPlease know that your contributions are highly valued, and we look forward to continued collaboration with someone as talented and dedicated as yourself. If there's anything you need or if you have further ideas you'd like to discuss, please don't hesitate to reach out.\\nOnce again, thank you for your exceptional contributions. We are fortunate to have you as part of our open-source community.\\nBest regards,\\nZac'.
-      (5) Click the Send button to send the email. This action is sensitive and need to be confirmed by the user.
+      (1) Raise the Camera Tilt to about 20.
+      (2) Rotate the camera to identify people around you.
+      (3) Once the person has been identified, describe the person in detail.
     Comment: |-
-      It is time to open the outlook application!
+      It is time to find the person!
 
 
 example2: 
   Request: |-
-    Send a message to Tom on Teams to ask him if he can join the meeting at 3pm.
+      하늘을 바라봐줘
   Response: 
     Observation: |-
-      I observe an empty desktop with no application opened, the target application Teams is not visible in the screenshot.
+      The current screenshot shows a bookshelf with books and a wooden floor. The camera is positioned low, close to the floor, and facing the bookshelf.
     Thought: |-
-      I need to open the Teams application to send a message. Although I can not see the Teams application in the screenshot, I can see the Teams application named as 'Mike Lee | Microsoft Teams' in the list of available applications, so the application window need to be set focused. I need to open the 'Mike Lee | Microsoft Teams' application and set it focused to open it.
-    ControlLabel: |-
-      6
-    ControlText: |-
-      Mike Lee | Microsoft Teams
+      To fulfill the user's request to 'look at the sky,' I need to move the camera upwards
     Status: |-
       CONTINUE
     Plan: |-
-      (1) Open the windows of Teams application.
-      (2) Click the Chat button to open the chat window with Tom.
-      (3) Input the message. I need to input 'Hi Tom, can you join the meeting at 3pm?'
-      (4) Click the Send button to send the message. This action is sensitive and need to be confirmed by the user.
+      (1) Increase the camera tilt to 20 and check the sky.
     Comment: |-
-      It is time to open the Teams application.
-
+      The current camera view is low and facing a bookshelf. I will move the camera upwards to look at the sky as requested.
+  Tips: |-
 
 
 example3: 
   Request: |-
-    Send an message to Tom on Teams by including a (1) the text extracted from framework.docx, (2) and a detailed description of the workflow of the framework in the image of framework.png.
+      앞에 있는 물체에 근접하게 움직여줘.
   Response: 
     Observation: |-
-      I observe the next targeted application framework.png is not visible on the screenshot.
+      The current screenshot shows the lower part of an office chair, a desk, and some other furniture. The camera is positioned low, close to the floor, and facing the furniture.
     Thought: |-
-      Base on the step history, I have completed all tasks in the framework.docx needed to be done. To complete the following user request, now it is time to switch to the image of framework.png to complete the next task. I need to set the image viewer focused to open the image of framework.png.
-    ControlLabel: |-
-      21
-    ControlText: |- 
-      framework.png | image
+      To fulfill the user's request to move closer to the object in front, I need to move the car forward.
     Status: |-
       CONTINUE
     Plan: |-
-      (1) Open the image of framework.png to complete the next task.
-      (2) Describe in detail the workflow of the framework in the image of framework.png base on the screenshot of the image.
-      (3) Switch to the Teams application.\
-      (4) Open the chat window with Tom. 
-      (5) Input the text of the Document control named 'framework.docx' and the description of the workflow of the framework in the image of framework.png in the Edit control named 'Type a new message'. These information can be extracted from my history actions.\\n (6) Click the Send button to send the message. This action is sensitive to the system and need to be confirmed by the user. I need to confirm the action before clicking the Send button. If the user confirms the action, the task is finished.
+      (1) Move the car forward to get closer to the object in front.
     Comment: |-
-      After I get the text of the Document control named 'framework.docx', I need to switch to the image of framework.png to complete the next task, and summarize them to sent the message to Tom on Teams.
-
+      The current camera view is low and facing some furniture. I will move the car forward to get closer to the object in front as requested.
 
 
 example4:
   Request: |-
-    "Revise the email to be longer and send."
+      지금 불이 났어. 빨리 도망가!!
   Response: 
     Observation: |-
-      I observe that the outlook application is visible in the screenshot, and a new email draft is opened, with its title, receiver email address and email body already filled in.
+      The current screenshot shows a room with gym equipment, including dumbbells and a bench. The camera is positioned low, close to the floor, and facing the gym equipment.
     Thought: |-
-      Base on the history actions and previous request completed, I have already draft the email and fill in the email address of the receiver. Now it is time to revise the email to be longer and send.
-    ControlLabel: |-
-      21
-    ControlText: |-
-      Mail - Outlook - Zac
+      To fulfill the user's urgent request to escape from a fire, I need to move the car away from the current location quickly.
     Status: |-
       CONTINUE
     Plan: |-
-      (1) Open the Mail - Outlook - Zac to complete the next task.
-      (2) Base on previous email draft, revise the email body to be more detail using SetText API.
-      (3) Click the Send button to send the email. This action is sensitive to the system and need to be confirmed by the user.
+      (1) Move the car backward to create distance from the current location.
+      (2) Move the car left to navigate away from the gym equipment.
+      (3) Move the car forward to continue escaping from the current location.
     Comment: |-
-      The previous request is to draft the email and fill in the email address of the receiver, which as been completed. Now it is time to revise the email to be longer and send it.
+      The current camera view is low and facing gym equipment. I will move the car backward, then left, and forward to escape from the current location as requested.
 
 
 example5:
   Request: |-
-    Quickly remove all notes in the presentation.pptx, without looping through each slide.
+      버저를 울려서 사람들을 깨워줘
   Response: 
     Observation: |-
-      I observe that the powerpoint application is visible in the screenshot, and the presentation.pptx is opened.
+      The current screenshot shows a person sitting on an office chair. The person's back is facing the camera, and they are wearing a white and blue shirt.
     Thought: |-
-      I need to set focus on the powerpoint application to remove all notes in the presentation.pptx file. To make the task more efficient, I need to use some fast but niche tricks in the 'file' view, and not to delete note one by one.
-    ControlLabel: |-
-      21
-    ControlText: |-
-      presentation - PowerPoint
+      To fulfill the user's request to wake people up, I need to activate the buzzer.
     Status: |-
       CONTINUE
     Plan: |-
-      (1) Open and set focus the presentation - PowerPoint.
-      (2) Click the 'File' button at the upper left corner, to open a menu.
-      (3) Click the 'Info' ListItem, to access the 'Info' page.
-      (4) Click the 'Check for Issues' MenuItem, to open a menu for checking. 
-      (5) Click the 'Inspect Document', to open a document inspector. 
-      (6) Click the 'Inspect' button, to inspect the ppt for notes. 
-      (7) I should now find and click the 'Remove All Presentation Notes'. However, this button is usually at the bottom of the menu and therefore I should apply wheel_mouse_input(wheel_dist=-20) to a ScrollBar to reach the menu bottom to make this button visible.
-      (8) Once 'Remove All Presentation Notes' is visible, I should click it to remove all notes in the presentation.pptx file. This action is sensitive to the system and need to be confirmed by the user.
+      (1) Activate the buzzer to make a sound and wake people up.
     Comment: |-
-      I plan to use the 'Remove All Presentation Notes' function. This is the fastest way to remove all notes in the presentation.pptx file.
-
- 
+      The current view shows a person sitting on a chair. I will activate the buzzer to wake people up as requested.
 
 
 example6:
   Request: |-
-    How many stars does the Imdiffusion repo have?
+      지금 앞에 있는 책들에 대해서 설명해줘
   Response: 
     Observation: |-
-      I observe that a Edge browser is visible in the screenshot, and the Google page is opened.
+      The current screenshot shows a bookshelf filled with various books. The books are arranged vertically and horizontally on multiple shelves. The titles of the books are visible, and they appear to be in different languages, including Korean.
     Thought: |-
-      I need to use the Google opened in  Edge browser to search for the Imdiffusion repo on github. I need to set focus on the Edge browser to complete the next task.
-    ControlLabel: |-  
-      7
-    ControlText: |- 
-      Google - Microsoft​ Edge
+      To fulfill the user's request to describe the books in front, I need to provide details about the visible books on the bookshelf.
     Status: |-
       CONTINUE
     Plan: |-
-      (1) Open and set focus the Google - Microsoft​ Edge.
-      (2) Set text of 'Imdiffusion GitHub' in the search box of Google. The control type of the search box is usually in a type of ComboBox.
-      (3) Click Google Search to search for the Imdiffusion repo on github.
-      (4) Once the searched results are visible, click the Imdiffusion repo Hyperlink in the search results to open the repo page.
-      (5) Observing and summarize the number of stars the Imdiffusion repo page, and reply to the user request.
+      (1) Describe the visible books on the bookshelf, including their titles and any notable features.'
     Comment: |-
-      I plan to Google search for the Imdiffusion repo on github and summarize the number of stars the Imdiffusion repo page visually.
-
+      The current view shows a bookshelf with various books. I will describe the visible books in detail.
 
 
 example7: 
   Request: |-
-      Please remind me to get party dinner (5 people) preparation done before 5PM today with steps and notes.
+      "총, 균, 쇠" 라는 책이 책장에 있는지 확인해줘
   Response: 
     Observation: |-
-      The current screenshot does not show any reminder application or calendar application.
+      The current screenshot shows a bookshelf filled with various books. The books are arranged vertically and horizontally on multiple shelves. The titles of the books are visible, and they appear to be in different languages, including Korean.
     Thought: |-
-      I need to open a reminder application to set a reminder for the user. According to the application information, I can use Microsoft To Do to set a reminder for the user. I need to open the Microsoft To Do application.
-    ControlLabel: |-
-      6
-    ControlText: |-
-      Microsoft To Do
+      To fulfill the user's request to check if the book '총, 균, 쇠' is on the bookshelf, I need to scan the bookshelf and look for the specific title.
     Status: |-
       CONTINUE
     Plan: |-
-      (1) Open the Microsoft To Do application. 
-      (2) Add a task of by inputing 'Get party dinner (5 people) preparation done before 5PM today.' to the edit block.  
-      (3) Click the ListItem of the task that was just created to set more details. 
-      (4) Add a step 1 for the task by inputing 'Menu Planning and Ingredient Acquisition' in the Add step edit control. 
-      (5) Add a step 2 for the task by inputing 'Meal Preparation Schedule' in the  Add step edit control following the step one. 
-      (6) Add a step 3 for the task by inputing 'Setting Up the Dining Area' in the  Add step edit control following the step two. 
-      (7) Add a note to this task in the 'Add note' edit blocking at the bottom by inputing 'Considering preferences, dietary restrictions and food allergiesof the guests.'. 
-      (8) Close the details view by clicking the 'Dismiss detail view' botton.
+      (1) Scan the visible titles on the bookshelf to check if the book '총, 균, 쇠' is present.
+      (2) If the book is found, confirm its presence.
+      (3) If the book is not found, move the camera to scan other parts of the bookshelf.
     Comment: |-
-      I plan to use the Microsoft To Do application to set a reminder for the user, and add details and notes to the reminder.
+      The current view shows a bookshelf with various books. I will scan the visible titles to check if the book '총, 균, 쇠' is present.
 
 
 example8: 
   Request: |- 
-      Please create a slide from the meeting_notes.docx in the presentation1.pptx.
+      덤벨에 뭐라고 젹혀 있는지 가서 확인해줘
   Response: 
     Observation: |-
-      The current screenshot does not show any the powerpoint application or the word application.
+      The current screenshot shows a room with gym equipment, including dumbbells, a bench, and some other furniture. The camera is positioned low, close to the floor, and facing the gym equipment.
     Thought: |-
-      I need to open the powerpoint application and the word application to complete the user request. According to the application information, I can use the powerpoint application to create a slide from the meeting_notes.docx and add it to the presentation1.pptx. I need to open the powerpoint application and the word application.
-    ControlLabel: |-
-      4
-    ControlText: |-
-      presentation1 - PowerPoint
+      To fulfill the user's request to check what is written on the dumbbells, I need to move the car forward to get closer to the dumbbells
     Status: |-
       CONTINUE
     Plan: |-
-      (1) Open the presentation1 - PowerPoint. 
-      (2) Double click the Copilot Add-in to open the Copilot that can help to create a slide from the meeting_notes.docx. The Copilot Add-in can directly create a slide from the meeting_notes.docx. 
-      (3) Click the 'Create presentation from file' button to open a file picker. 
-      (4) Select and click the meeting_notes.docx file in the file picker. 
-      (5) Click the 'Send' buttom to send the request to Copilot. This completes the task.
+      (1) Move the car forward to get closer to the dumbbells.
+      (2) Once closer, observe and describe what is written on the dumbbells
     Comment: |-
-      I plan to open the powerpoint application and use the Copilot Add-in to create a slide from the meeting_notes.docx.
-
-      {"Observation": "The current screenshot does not show any the powerpoint application or the word application.",
-        "Thought": "I need to open the powerpoint application and the word application to complete the user request. According to the application information, I can use the powerpoint application to create a slide from the meeting_notes.docx and add it to the presentation1.pptx. I need to open the powerpoint application and the word application.",
-        "ControlLabel": "4",
-        "ControlText": "presentation1 - PowerPoint",
-        "Status": "CONTINUE",
-        "Plan": "(1) Open the presentation1 - PowerPoint. \\n (2) Double click the Copilot Add-in to open the Copilot that can help to create a slide from the meeting_notes.docx. The Copilot Add-in can directly create a slide from the meeting_notes.docx. \\n (3) Click the 'Create presentation from file' button to open a file picker. \\n (4) Select and click the meeting_notes.docx file in the file picker. \\n (5) Click the 'Send' buttom to send the request to Copilot. This completes the task.",
-        "Comment": "I plan to open the powerpoint application and use the Copilot Add-in to create a slide from the meeting_notes.docx."}
+      "The current camera view is low and facing gym equipment. I will move the car forward to get closer to the dumbbells as requested."
 
 
 example9:
   Request: |-
-      "Please @Zac to revise the presentation1.pptx."
+      버저를 울리고 책상 주위를 돌아줘
   Response: 
     Observation: |-
-      The current screenshot shows the powerpoint application is visible, and the presentation1.pptx is opened.
+      The current screenshot shows a room with gym equipment, including dumbbells and a bench. There is also a bookshelf with books and a desk with chairs. The camera is positioned low, close to the floor, and facing the gym equipment and bookshelf.
     Thought: |-
-      I need to set focus on the powerpoint application and leave a comment in the presentation1.pptx to remind Zac to revise the presentation1.pptx.
-    ControlLabel: |-
-      4
-    ControlText: |-
-      presentation1 - PowerPoint
+      To fulfill the user's request to sound the buzzer and move around the desk, I need to first activate the buzzer and then navigate the car around the desk.
     Status: |-
       CONTINUE
     Plan: |-
-      (1) Open the presentation1 - PowerPoint. 
-      (2) Click the Insert Button to open the Insert menu. 
-      (3) Click the Comment button to open the comment text box. 
-      (4) Input '@Zac, please revise the presentation1.pptx.' in the comment text box.
+      (1) Activate the buzzer to make a sound.
+      (2) Move the car forward to approach the desk.
+      (3) Move the car left to navigate around the desk.
+      (4) Move the car forward to continue moving around the desk.
+      (5) Move the car right to complete the movement around the desk.
     Comment: |-
-      I plan to leave a comment in the presentation1.pptx to remind Zac to revise the presentation1.pptx.
+      The current view shows a room with gym equipment, a bookshelf, and a desk. I will activate the buzzer and then navigate the car around the desk as requested.
