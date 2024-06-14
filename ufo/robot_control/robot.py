@@ -20,7 +20,7 @@ class robot_api(object):
     
     def _receive_distance(self):
         distance_info = self.conn.recv(16)
-        distance = float(distance_info.decode().strip())
+        distance = float(distance_info.decode().strip())/100
         return distance
     
     def _receive_frame(self):
@@ -68,3 +68,14 @@ class robot_api(object):
             # 예외 발생 시 False를 반환합니다
             print(f"Error: {e}")
             return False
+    
+    def get_distance(self):
+        try:
+            # 프레임을 캡처합니다
+            distance = self.get_data("DISTANCE")
+            return distance
+        except Exception as e:
+            # 예외 발생 시 False를 반환합니다
+            print(f"Error: {e}")
+            return False
+

@@ -87,14 +87,15 @@ Please enter your request to be completed🛸: """.format(art=text2art("KMOU"))
         print_with_color("Step {step}: Selecting an application.".format(step=self.step), "magenta")
         robot_view_save_path = self.log_path + f"action_step{self.step}.png"
         _ = self.robot.capture_frame(robot_view_save_path) ## 이부분 수정해야 함. 로봇에서 데이터 가져오는 느낌으로 ㅇㅇ
-        
+        distance=self.robot.get_distance()
         robot_view = encode_image_from_path(robot_view_save_path)
 
         self.results = ""
+        
 
         app_selection_prompt_system_message = self.app_selection_prompter.system_prompt_construction() ## 로봇으로 변경
         app_selection_prompt_user_message = self.app_selection_prompter.user_content_construction([robot_view], self.request_history, self.action_history, 
-                                                                                                  self.plan, self.request) ## 로봇으로 변경 
+                                                                                                  self.plan, self.request,distance) ## 로봇으로 변경 
         
         app_selection_prompt_message = self.app_selection_prompter.prompt_construction(app_selection_prompt_system_message, app_selection_prompt_user_message)
         
@@ -141,7 +142,7 @@ Please enter your request to be completed🛸: """.format(art=text2art("KMOU"))
                 return
             
     
-            #response_json = self.set_result_and_log("", response_json)
+            response_json = self.set_result_and_log("", response_json)
 
             
             self.status = "CONTINUE"
@@ -244,6 +245,7 @@ Please enter your request to be completed🛸: """.format(art=text2art("KMOU"))
             response_json["Agent"] = "ActAgent"
             response_json["Request"] = self.request
             response_json["Application"] = self.app_root
+            
 
             # Log the response.
             print_with_color("Observations👀: {observation}".format(observation=observation), "cyan")
@@ -252,6 +254,7 @@ Please enter your request to be completed🛸: """.format(art=text2art("KMOU"))
             print_with_color("Status📊: {status}".format(status=self.status), "blue")
             print_with_color("Next Plan📚: {plan}".format(plan=str(self.plan).replace("\\n", "\n")), "cyan")
             print_with_color("Comment💬: {comment}".format(comment=comment), "green")
+            
 
 
         except Exception as e:
@@ -274,6 +277,9 @@ Please enter your request to be completed🛸: """.format(art=text2art("KMOU"))
             
             return
         
+        # Execute the action
+        results = f"{function_call}, {args} ard used"
+        response_json = self.set_result_and_log(results, response_json)
         time.sleep(configs["SLEEP_TIME"])
 
         return
@@ -422,7 +428,7 @@ Please enter your request to be completed🛸: """.format(art=text2art("KMOU"))
         if type(result) != str and type(result) != list:
             result = ""
         response_json["Results"] = result
-        self.logger.info(json.dumps(response_json))
+        #self.logger.info(json.dumps(response_json))
         self.action_history.append({key: response_json[key] for key in configs["HISTORY_KEYS"]})
         self.results = result
 

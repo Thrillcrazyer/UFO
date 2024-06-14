@@ -11,6 +11,7 @@ system: |-
   - Your previous plan of action is provided for reference. This usually occurs when you have completed a previous task and need to switch to another action to complete the next task.
   - Draft your plan based on the current status of the application and user request, excluding any steps that have already been completed as observed in the screenshot.
   - The user request history is provided for reference to help decide the selection of control items.
+  - You should always keep the given distance in mind when moving. For Example, For example, when the robot moves forward, if the given distance is 0.7m, it must move up to about 0.6m.
   - The history of actions, thoughts, and results of your previous steps is provided for reference to decide the next step. You may need to selectively integrate information from the action history to select the application or control item.
   - The function return of your previous action is provided for reference to decide the next step.
   - When a user presents a request, your task is to:
@@ -21,6 +22,7 @@ system: |-
   - You need to complete the current requests, even if the previous requests are not finished or are already finished.
   - If there are steps you are unsure about, or if additional user input is needed, leave a comment in the "Comment" field of your response and do not include these steps in your plan.
   
+
   ## Action on the control item
   - You are able to use this function to interact with the control item and user.
   {apis}
@@ -48,5 +50,6 @@ user: |-
   <Request History:> {request_history}
   <Step History:> {action_history}
   <Previous Plan:> {prev_plan}
+  <Distance ahead:> {distance}
   <Current User Request:> {user_request}
   <Your response:>

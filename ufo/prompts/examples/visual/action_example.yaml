@@ -23,98 +23,78 @@ example1:
 
 example2: 
   Request: |- 
-    My name is Zac. Please send a email to jack@outlook.com to thanks his contribution on the open source.
+     Activate the buzzer to make a sound.
   Response: 
     Observation: |-
-      The screenshot shows that I am on a calendar page of Outlook. The new email editing window is not opened and also the New Email button is not visible in the screenshot. The last action took effect by opening the Outlook windows.
+      The current screenshot shows a room with gym equipment, including dumbbells and a bench. There is also a bookshelf with books visible on the left side. The camera is positioned low, close to the floor, and facing the gym equipment and bookshelf.
     Thought: |-
-      Base on the previous plan, I need to click the New Email button to open a New Email window. However, the New Email button is not visible in the screenshots, also not available in the control information. I may need to first click the Main Page TabItem to switch to the Main Page, and then find and click the New Email button to open a New Email window.
+      To fulfill the user's request to sound the buzzer and move around in a circle, I need to first activate the buzzer and then navigate the car in a circular path.
     Function: |-
-      click_input
+      buzzer
     Args:
-      {"button": "left", "double": false}
-    Status: |-
-      CONTINUE
-    Plan: |-
-      (1) Find the New Email button in the Main Page and click it to open a New Email window. If the New Email button is still not visible in the screenshot, I may need to look for take action on other control items to navigate to the New Email button.
-      (2) Input the email address of the receiver.
-      (3) Input the title of the email. I need to input 'Thanks for your contribution on the open source.'.
-      (4) Input the content of the email. I need to input 
-      
-      'Dear Jack,
-      I hope this message finds you well. I am writing to express my sincere gratitude for your outstanding contribution to our open-source project. Your dedication and expertise have truly made a significant impact, and we are incredibly grateful to have you on board.
-      Your commitment to the open-source community has not gone unnoticed, and your recent contributions have been instrumental in enhancing the functionality and quality of our project. It's through the efforts of individuals like you that we are able to create valuable resources that benefit the community as a whole.
-      Your code reviews, bug fixes, and innovative ideas have not only improved the project but have also inspired others to contribute their best. We recognize and appreciate the time and effort you've invested in making our open-source initiative a success.
-      
-      Please know that your contributions are highly valued, and we look forward to continued collaboration with someone as talented and dedicated as yourself. If there's anything you need or if you have further ideas you'd like to discuss, please don't hesitate to reach out.
-      Once again, thank you for your exceptional contributions. We are fortunate to have you as part of our open-source community.
-      Best regards,
-      Zac'.
-
-      (5) Click the Send button to send the email.
-    Comment: |-
-      I am looking for the New Email button, and will try to find it in the Main Page.
-  Tips: |-
-    - Sending an email is a sensitive action that needs to be confirmed by the user before the execution.
-    - Since the New Email button is not visible in the screenshot, I may need to take action on other control items to first navigate to the New Email button, and then open a New Email window to compose the email.
-
-
-
-example3: 
-  Request: |- 
-    Send a message to Tom on Teams to ask him if he can join the meeting at 3pm.
-  Response: 
-    Observation: |-
-      The screenshot shows that I am on the chat window of Tom on Teams, the message input box is empty and ready to input. The last action took effect by opening the chat window with Tom based on the previous screenshot.
-    Thought: |-
-      Base on the screenshots and the control item list and my action history, I have opened, and now on the chat window of Tom on Teams. I need to input the message in the Edit control named 'Type a new message' for the current one-step action, which is not sensitive and does not confirmation.
-    Function: |-
-      set_edit_text
-    Args:
-      {"text": "Hello Tom. It's 3 PM. Are you available to join the meeting now?"}
-    Status: |-
-      CONTINUE
-    Plan: |-
-      (1) Click the Send button to send the message. This is a sensitive action that need to be confirmed by the user before the execution.
-    Comment: |-
-      Inputting the message is not a sensitive action and do not need to be confirmed.
-  Tips: |-
-    - Sending a message is a sensitive action and need to be confirmed.
-
-
-
-example4:
-  Request: |-
-    Draft an email to Amy to ask her how she feels about the new project.
-  Response: 
-    Observation: |-
-      The screenshot shows that I am on the editing window of a new email, and the 'To', 'CC', 'Title' and 'Email Body' blocks are visible and ready to input. The title of the email has already been filled. The last action took effect by opening the Outlook windows and jump to the new email editing window directly.
-    Thought: |-
-      Base on the previous plan, I need to click the New Email button to open a New Email window. But the screenshot shows that the New Email window has already opened and the title of email has already been inputted. I skip some of the actions in the previous plan and move to draft the content of the email and send it to Amy.
-    Function: |-
-      set_edit_text
-    Args:
-      text: |
-        Dear Amy,
-
-        I hope this message finds you well. I am writing to ask how you feel about the new project. Let me know if you have any concerns.
-
-        Best regards,
-        [Sender's Name]
+      {}
     Status: |-
       FINISH
     Plan: |-
       <FINISH>
     Comment: |-
-      I revised the previous plan base on the screenshot since I observe that New Email window has already opened and the title of email has already been inputted. I cannot input the email address since it is not provided in the user request. Since the user did not ask me to send the email, the task is finished after I draft the content of the email.
+      The robot has finished sounding the buzzer.
   Tips: |-
-    - Sending an email is a sensitive action that needs to be confirmed by the user before the execution.
-    - You need to draft the content of the email and send it to the receiver. Use polite language when drafting the email.
+   
 
+
+example3: 
+  Request: |- 
+    주위에 사람이 있는지 확인 해줘
+  Response: 
+    Observation: |-
+      The current screenshot shows a black bag on a wooden floor. The camera is positioned low and facing the bag.
+    Thought: |-
+      Base on the screenshots and request, I have to raise my head and turn 90 degrees to observe people.
+    Function: |-
+      cameramove
+    Args:
+      {"pan": 90, "tile": 20}
+    Status: |-
+      CONTINUE
+    Plan: |-
+      (1) Turn 90 degrees to the right.
+      (2) Observe the new view to check if there is a person in front.
+      (3) If a person is unvisible, Turn 90 degrees.
+      (4) If a person is visible, describe the person in detail.
+    Comment: |-
+      he current camera view is low and facing a black bag. I will rotate the camera 90 degrees to the right to look for a person as requested.
+  Tips: |-
+    - It looks at the environment and infers whether there are people.
+
+
+
+example4:
+  Request: |-
+    앞에 있는 물체를 피해서 앞으로 가줘
+  Response: 
+    Observation: |-
+      The current screenshot shows a room with gym equipment, including a dumbbell and other weights on the floor. The camera is positioned low, close to the floor, and facing the gym equipment.
+    Thought: |-
+      To fulfill the user's request to move forward while avoiding the object in front, I need to navigate around the dumbbell.and Since the previous distance was 0.51m, move about 40cm and then tilt your head again.
+    Function: |-
+      carleft
+    Args:
+      {"angle": 45}
+    Status: |-
+      CONTINUE
+    Plan: |-
+      (1) Move the car slightly to the left to avoid the dumbbell.
+      (2) Based on the measured distance, move the car forward to proceed past the dumbbell.
+      (3) Move the car slightly to the right to return to the original path.
+    Comment: |-
+      If you collide with an object, problems may arise, so take your time when moving.
+  Tips: |-
+    
 
 example5:
   Request: |-
-    Search for the word 'UFO' in the document.
+    2층 책장에서 총,균,쇠 라는 책은 오른쪽에서 몇 번째에 꽃혀 있는지 알려줘
   Response: 
     Observation: |-
       The screenshot shows that I am on the editing window of a Word file. The search box is visible and the word 'UFO' is already inputted. The previous action of inputting 'UFO' took effect based on the screenshot of the last step.

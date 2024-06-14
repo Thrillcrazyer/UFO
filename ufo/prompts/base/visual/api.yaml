@@ -1,12 +1,3 @@
-GetDistance:
-  summary: |-
-    "GetDistance" is to get the distance of front object. It is generally used to measure the distance to an object before taking action.
-  usage: |-
-    [1] API call: getdistance()
-    [2] Args: None
-    [3] Example: getdistance()
-    [4] Return: distance of front object
-
 SpeakText:
   summary: |-
     “SpeakText” is used to convey information to the user. To enter text you must use the 'text' argument.
