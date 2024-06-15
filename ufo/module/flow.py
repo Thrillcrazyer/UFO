@@ -66,9 +66,9 @@ class Session(object):
         self.robot=robot.robot_api(port=5000)
 
         welcome_text = """
-Welcome to use KMOU Robo🛸, A Decision Maker for Robot Control System using LLM. 
+Welcome to use CA Robo🛸, A Decision Maker for Robot Control System using LLM. 
 {art}
-Please enter your request to be completed🛸: """.format(art=text2art("KMOU"))
+Please enter your request to be completed🛸: """.format(art=text2art("CA"))
 
         print_with_color(welcome_text, "cyan")
         
