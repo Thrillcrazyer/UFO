@@ -96,7 +96,7 @@ example6:
     Status: |-
       CONTINUE
     Plan: |-
-      (1) Describe the visible books on the bookshelf, including their titles and any notable features.'
+      (1) Describe the visible books on the bookshelf, including their titles and any notable features.
     Comment: |-
       The current view shows a bookshelf with various books. I will describe the visible books in detail.
 

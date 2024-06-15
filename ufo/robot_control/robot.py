@@ -48,6 +48,11 @@ class robot_api(object):
         elif command == "DISTANCE":
             self._call_distance()
             return self._receive_distance()
+        elif "SPEAKTEXT" in command:
+            text=command.split("/")[1]
+            print("말하는중 !!!!!!!!!!!!!!!-----------------------------------")
+            print(text)
+            
         else:
             self.conn.sendall(command.encode('utf-8'))
         return None

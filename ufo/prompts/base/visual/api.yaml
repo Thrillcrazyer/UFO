@@ -1,6 +1,6 @@
 SpeakText:
   summary: |-
-    “SpeakText” is used to convey information to the user. To enter text you must use the 'text' argument.
+    “SpeakText” is used to convey information to the user. To enter text you must use the 'text' argument. text must be korean.
   usage: |-
     [1] API call: speaktext(text="")
     [2] Args: None

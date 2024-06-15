@@ -94,179 +94,158 @@ example4:
 
 example5:
   Request: |-
-    2층 책장에서 총,균,쇠 라는 책은 오른쪽에서 몇 번째에 꽃혀 있는지 알려줘
+    지금 모니터에서 어떤 내용을 수행하고 있는지에 대해서 묘사해줘
   Response: 
     Observation: |-
-      The screenshot shows that I am on the editing window of a Word file. The search box is visible and the word 'UFO' is already inputted. The previous action of inputting 'UFO' took effect based on the screenshot of the last step.
+      The current screenshot shows a computer monitor displaying a code editor. The code editor contains Python code, with functions related to controlling a robot's movements such as 'carLeft', 'carRight', and 'CameraMove'. There is also a speaker labeled 'Britz' visible below the monitor.
     Thought: |-
-      Base on the screenshots, the word 'UFO' is already inputted in the Edit control named 'Find'. I need to click the Find button to search for the word 'UFO' in the document, and the task is finished.
+      To fulfill the user's request to describe what is being performed on the monitor, I need to provide details about the visible code and its purpose.
     Function: |-
-      click_input
+      speaktext
     Args: 
-      {"button": "left", "double": false}
+      {"text":"모니터에는 로봇의 움직임을 제어하는 PYTHON 코드가 표시되어 있습니다. 'CARLEFT' 함수는 로봇을 왼쪽으로 이동시키고, 'CARRIGHT' 함수는 로봇을 오른쪽으로 이동시키며, 'CAMERAMOVE' 함수는 카메라의 움직임을 제어합니다."}
     Status: |-
       FINISH
     Plan: |-
       <FINISH>
     Comment: |-
-      I searched for the word 'UFO' in the document successfully. The user should view the search result.
+      The visible code on the monitor includes functions for controlling a robot's movements. The 'carright' function makes the robot move right, the 'carleft' function makes the robot move left, and the 'cameramove' function controls the camera movements.
   Tips: |-
-    - If there are steps already taken (e.g., the required text is already inputted edit box), you do not need to repeat them. You can skip the steps that have already been taken and move to the next step. 
-
+    
 
 example6:
   Request: |-
-    Send an message to Tom on Teams by including a (1) the text extracted from framework.docx, (2) and a detailed description of the workflow of the framework in the image of framework.png.
+    주위를 돌아다니면서 컴퓨터가 모니터를 찾고, 그 모니터를 묘사해줘
   Response: 
     Observation: |-
-      The screenshot shows that I am on the main window of the Word file named 'framework.docx'. The text of the file, which I am interest, is visible in the screenshot. The last action took effect by opening the document successfully, if looking at the previous screenshot.
+      The current screenshot shows a blurry and unclear view. The camera needs to be adjusted to obtain a clearer view.
     Thought: |-
-      Base on the screenshots and the control item list, I need to use the 'GetText' action to get the text of the Document control named 'framework.docx'. Given the previous plan, this completes the partial user request on the framework.docx, and therefore I need to set the status as 'APP_SELECTION' immediately to switch to the image of framework.png to complete the next task.
+      To fulfill the user's request to find and describe a computer monitor, I need to move back to secure your view.
     Function: |-
-      texts
-    Args: {}
+      carback
+    Args: {"distance": 0.5}
     Status: |-
-      APP_SELECTION
+      CONTINUE
     Plan: |-
-      (1) Switch to the image of framework.png to complete the next task, the current status need to set to 'APP_SELECTION'.
-      (2) Describe in detail the workflow of the framework in the image of framework.png base on the screenshot of the image.
-      (3) Switch to the Teams application.
-      (4) Open the chat window with Tom.
-      (5) Input the text of the Document control named 'framework.docx' and the description of the workflow of the framework in the image of framework.png in the Edit control named 'Type a new message'. These information can be extracted from the results from my history steps and I will use them to compose the message.
-      (6) Click the Send button to send the message. This action is sensitive to the system and need to be confirmed by the user. I need to confirm the action before clicking the Send button. If the user confirms the action, the task is finished.
+      (1) Adjust the camera angle to obtain a clearer view.
+      (2) If the view is still unclear, continue adjusting the camera angle until a clear view is obtained.
+      (3) Once a clear view is obtained, search for a computer monitor.
+      (4) If the monitor is found, describe its appearance in detail.
     Comment: |-
-      The partial tasks on 'framework.docx' is completed once I take the current action. I need to set Status immediately to 'APP_SELECTION' to switch to the image of framework.png to complete the next task.
+      The current view is blurry and unclear. This is usually a situation where you are too close to an object and cannot see clearly.
   Tips: |-
-    - In Word application, the main canva is a Document control, and the text of the document can be extracted by using the 'GetText' action.
-    - After extracting the text of the document, I need to set the status as 'APP_SELECTION' immediately to switch to the image of framework.png to complete the next task.
-
+    - By looking back at past images, we can make inferences about what this object is.
+    - Allows you to move back if the same situation persists.
 
 example7:
   Request: |-
-    Quickly remove all notes in the presentation.pptx, without looping through each slide.
+    전방에 있는 책장의 2번째 칸에 뭐가 있는지 설명해줘.
   Response: 
     Observation: |-
-      The current screenshot shows the PowerPoint application with the 'presentation.pptx' file open. The 'File Tab' button is visible, which is needed to access the backstage view where the 'Check for Issues' option is located. This matches the next step in the previous plan. The application appears to be in the normal editing view, and no backstage view or other menus are open at this time.
+      The current screenshot shows a floor with a speckled pattern and a wooden cabinet in the background. There is a small white object on the floor near the cabinet. The camera is positioned low, close to the floor, and facing the cabinet.
     Thought: |-
-      The user request to do it quickly. To make the task more efficient, I need to use some fast but niche tricks using the 'Remove All Presentation Notes' function.  To do so, I need to first click the 'File' button to open the menu.
+      To fulfill the user's request to describe what is on the second shelf of the bookshelf in front, I need to move the camera upwards to get a better view of the bookshelf.
     Function: |-
-      click_input
+      cameramove
     Args: 
-      {"button": "left", "double": false}
+      {"pan": 90, "tile": 20}
     Status: |-
       CONTINUE
     Plan: |-
-      (1) Click the 'Info' ListItem, to access the 'Info' page.
-      (2) Click the 'Check for Issues' MenuItem, to open a menu for checking.
-      (3) Click the 'Inspect Document', to open a document inspector.
-      (4) Click the 'Inspect' button, to inspect the ppt for notes.
-      (5) I should now find and click the 'Remove All Presentation Notes'. However, this button is usually at the bottom of the menu, and therefore I should apply wheel_mouse_input(wheel_dist=-20) to a ScrollBar to reach the menu bottom to make this button visible.
-      (6) Once 'Remove All Presentation Notes' is visible, I should click it to remove all notes in the presentation.pptx file. This action is sensitive to the system and need to be confirmed by the user.
+      (1) Raise the camera tilt to 20 get a better view of the bookshelf.
+      (2) Observe and describe the contents of the second shelf of the bookshelf.
+      (3) If you can't see it, move back to gain visibility.
     Comment: |-
-      I plan to use the 'Remove All Presentation Notes' function. This is the fastest way to remove all notes in the presentation.pptx file.
+      The current camera view is low and facing a cabinet. I will move the camera upwards to get a better view of the bookshelf and describe the contents of the second shelf as requested.
   Tips: |-
-    - The 'Remove All Presentation Notes' function is the fastest way to remove all notes in the presentation.pptx file. I should use this function to complete the task quickly instead of looping through each slide.
-    - The 'Remove All Presentation Notes' is usually at the bottom of the menu, and I should apply wheel_mouse_input(wheel_dist=-20) to a ScrollBar to reach the menu bottom to make this button visible.
-
+    - By looking back at past images, we can make inferences about what this object is.
+    - Allows you to move back if the same situation persists.
 
 example8:
   Request: |-
-    How many stars does the Imdiffusion repo have?
+    앞에 있는 사람의 옷에 뭐라고 적혀져 있는지 묘사해줘
   Response: 
     Observation: |-
-      I observe that the Edge browser is visible in the screenshot, with the Google search page opened.
+      The current screenshot shows a person sitting on an office chair. The person is wearing a black t-shirt with some text written on it. The text is partially visible.
     Thought: |-
-      I need to input the text 'Imdiffusion GitHub' in the search box of Google to get to the Imdiffusion repo page from the search results. The search box is usually in a type of ComboBox.
+      To fulfill the user's request to describe what is written on the person's shirt, I need to to move the camera upwards to read text.
     Function: |-
-      set_edit_text
+      cameramove
     Args: 
-      {"text": "Imdiffusion GitHub"}
+      {"pan": 90, "tile": 20}
     Status: |-
       CONTINUE
     Plan: |-
-      (1) After input 'Imdiffusion GitHub', click Google Search to search for the Imdiffusion repo on github.
-      (2) Once the searched results are visible, click the Imdiffusion repo Hyperlink in the searched results to open the repo page.
-      (3) Observing and summarize the number of stars the Imdiffusion repo page, and reply to the user request.
+      (1) Raise the camera tilt to 20 get a better view of the text on the shirt.
+      (2) observe and describe the text on the shirt.
     Comment: |-
-      I plan to use Google search for the Imdiffusion repo on github and summarize the number of stars the Imdiffusion repo page visually.
+      Inferring from the current screenshot, it is easier to close the text on the shirt by raising it upward rather than moving closer.
   Tips: |-
-    - The search box is usually in a type of ComboBox.
-    - The number of stars of a Github repo page can be found in the repo page visually.
-
+    - In general, when making observations, it is best to adjust and move the camera to match the height of the target.
 
 example9: 
   Request: |- 
-    Please remind me to get party dinner (5 people) preparation done before 5PM today with steps and notes.
+    주위를 돌아다니면서 냉장고가 보이면 그 냉장고를 묘사해줘 
   Response: 
     Observation: |-
-      The current screenshot shows that I am on the Microsoft To Do application. The application is open and there is a edit block at the bottom for inputting the task.
+      The current screenshot shows a wooden cabinet with a white object on the floor in front of it. There is no refrigerator visible in the image.
     Thought: |-
-      I need to add a task of 'Get party dinner (5 people) preparation done before 5PM today.' to the edit block of 'Add a task in “My Day”'. I also need to set more details for the task afterwards, including adding steps and notes.
+      To fulfill the user's request to look around and describe a refrigerator if found, I need to move the car forward to explore the surroundings.It moves to the side because the front is currently blocked.
     Function: |-
-      set_edit_text
+      carleft
     Args: 
-      {"text": "Get party dinner (5 people) preparation done before 5PM today."}
+      {"angle": 90}
     Status: |-
       CONTINUE
     Plan: |-
-      (1) Click the ListItem of the task that was just created to set more details.
-      (2) Add a step 1 for the task by inputing 'Menu Planning and Ingredient Acquisition' in the Add step edit control.
-      (3) Add a step 2 for the task by inputing 'Meal Preparation Schedule' in the Add step edit control following the step one.
-      (4) Add a step 3 for the task by inputing 'Setting Up the Dining Area' in the Add step edit control following the step two.
-      (5) Add a note to this task in the 'Add note' edit blocking at the bottom by inputing 'Considering preferences, dietary restrictions and food allergiesof the guests.'.
-      (6) Close the details view by clicking the 'Dismiss detail view' botton.
+      (1) Move the car forward to explore the surroundings.
+      (2) Rotate the camera to scan the area for a refrigerator.
+      (3) If a refrigerator is found, describe it in detail.
     Comment: |-
-      After creating the task, I need to set more details for the reminder, including adding steps and notes.
+      The current camera view is low and facing a cabinet. I will move the car forward to explore the surroundings and look for a refrigerator as requested.
   Tips: |-
-    - You need to add more details for the task, including adding steps and notes.
-    - You need to add each step one by one and add notes to the task.
-
-
 
 example10:
   Request: |-
-      Please create a slide from the meeting_notes.docx in the presentation1.pptx.
+      방을 돌면서 사람이 있는지 탐색해줘.
   Response: 
     Observation: |-
-      The current screenshot shows that I am on the Microsoft PowerPoint application. The Copilot Add-in is visible in the screenshot.
+      The current screenshot shows a tiled floor with parts of furniture, including table legs and chair wheels. The camera is positioned low, close to the floor, and facing the furniture.
     Thought: |-
-      I need to click the Copilot Add-in, which can help me create a slide from the meeting_notes.docx. The Copilot Add-in can directly create a slide from the meeting_notes.docx.
+      To fulfill the user's request to explore the room and check for people, I need explore your surroundings and move based on this.
     Function: |- 
-      click_input
+      cameramove
     Args: 
-      {"button": "left", "double": false}
+      {"pan": 180, "tile": 50}
     Status: |-
       CONTINUE
     Plan: |-
-      (1) Click the 'Create presentation from file' button to open a file picker.
-      (2) When the 'meeting_notes' is visible in the file picker, select and click the "meeting_notes" ListItem to create a slide.
-      (3) Click the 'Send' buttom to send the request to Copilot. This completes the task.
+      (1) Rotate the camera to explore your surroundings.
+      (2) Move the car forward to explore the room.
+      (3) Adjust the camera tilt to get a better view of the surroundings.
+      (4) Continue moving and adjusting the camera until the room is fully explored.
     Comment: |-
-      I need to use the Copilot Add-in to create a slide from the meeting_notes.docx.
+      I am thinking about places where people can be, step by step.
   Tips: |-
-    - The Copilot Add-in can directly create a slide from the meeting_notes.docx. You need to use the Copilot Add-in to complete the task, instead of manually creating a slide from the meeting_notes.docx.
+    - Before taking action, plan and explore based on observations.
 
 
 example11: 
   Request: |-
-    Save the presentation1.pptx into pdf format.
+    사람을 보고 인사해줘
   Response: 
     Observation: |-
-      The current screenshot shows the powerpoint application is visible, and the presentation1.pptx is opened.
+      The current screenshot shows a person sitting on an office chair. The person is wearing a black t-shirt and looking towards the camera.
     Thought: |- 
-      I need to click the 'File' button, to make the the 'Save As Adobe PDF' button available. Then I need to click the 'Save As Adobe PDF' button to save the presentation1.pptx into pdf format. If the 'Save As Adobe PDF' button is not visible in the screenshot, I may need to use the 'Save a Copy' button to manually save the presentation1.pptx into pdf format.
+       To fulfill the user's request to greet the person, I need to use the SpeakText function to say hello.
     Function: |-  
-      click_input
+      speaktext
     Args: 
-      {"button": "left", "double": false}
+      {"text": "안녕하세요 반가워요!!"}
     Status: |-
-      CONTINUE
+      FINISH
     Plan: |-
-      (1) Click the "Save As Adobe PDF" button to open the save as dialog. 
-      (2) Click the "Save" button to save the presentation1.pptx into pdf format. This completes the task.
+      <FINISH>
     Comment: |-
-      I need to use the "Save As Adobe PDF" button to save the presentation1.pptx into pdf format.
+      The camera has successfully identified a person sitting on an office chair. I will greet the person by saying '안녕하세요!
   Tips: |-
-    - Saving the presentation1.pptx into pdf format can be done by clicking the "Save As Adobe PDF" button.
-    - If the "Save As Adobe PDF" button is not visible in the screenshot, you may need to use the "Save a Copy" button to manually save the presentation1.pptx into pdf format.
-
