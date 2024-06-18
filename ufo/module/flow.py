@@ -187,7 +187,7 @@ Please enter your request to be completed🛸: """.format(art=text2art("CA"))
         annotated_robot_view_save_path = self.log_path + f"action_step{self.step}_annotated.png"
         concat_robot_view_save_path = self.log_path + f"action_step{self.step}_concat.png"
         _ = self.robot.capture_frame(robot_view_save_path) ## 이부분 수정해야 함. 로봇에서 데이터 가져오는 느낌으로 ㅇㅇ
-
+        distance=self.robot.get_distance()
         image_url = []
 
             

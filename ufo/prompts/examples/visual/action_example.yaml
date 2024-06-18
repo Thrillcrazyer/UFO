@@ -2,23 +2,27 @@ version: 1.0
 
 example1: 
   Request: |-
-    하늘을 바라봐줘
+    전방 2미터 바로 전진 후 버저 울리고 상황보고 할 수 있도록
   Response: 
     Observation: |-
-      The current screenshot shows a bookshelf with books and a wooden floor. The camera is positioned low, close to the floor, and facing the bookshelf.
+      The current screenshot shows a room with a wooden cabinet on the left, a yellow bag on the floor, and a blue partition on the right. The camera is positioned low, close to the floor.
     Thought: |-
-      To fulfill the user's request to 'look at the sky,' I need to move the camera upwards
+      To fulfill the user's request to move forward 2 meters and then sound the buzzer, I need to move the car forward in increments until the total distance of 2 meters is covered, then activate the buzzer and report the situation. After measuring the distance, I think it's okay to start because there are no obstacles within 2m.
     Function: |-
-      cameramove
+      carforward
     Args: 
-      {"pan": 90, "tile": 30}
+      {"distance": 2}
     Status: |-
-      FINISH
+      CONTINUED
     Plan: |-
-      <FINISH>
+      (1) Move the car forward by 2 meters.
+      (2) Activate the buzzer.
+      (3) Capture a new screenshot and report the situation.
     Comment: |-
-      The current camera view is low and facing a bookshelf. I will move the camera upwards to look at the sky as requested.
+      The current view shows a room with a wooden cabinet, a yellow bag, and a blue partition. I will move the car forward by another 0.2 meters to complete the total distance of 2 meters.
   Tips: |-
+      - I have to keep moving while thinking about the distance.
+      - When reporting is necessary, be sure to report it.
 
 
 example2: 
@@ -42,7 +46,6 @@ example2:
   Tips: |-
    
 
-
 example3: 
   Request: |- 
     주위에 사람이 있는지 확인 해줘
@@ -58,14 +61,15 @@ example3:
     Status: |-
       CONTINUE
     Plan: |-
-      (1) Turn 90 degrees to the right.
-      (2) Observe the new view to check if there is a person in front.
-      (3) If a person is unvisible, Turn 90 degrees.
-      (4) If a person is visible, describe the person in detail.
+      (1) Raise the camera tilt to 20 degrees to get a better view of the surroundings.
+      (2) Turn 90 degrees to the right.
+      (3) Observe the new view to check if there is a person in front.
+      (4) If a person is unvisible, Turn 90 degrees.
+      (5) If a person is visible, describe the person in detail.
     Comment: |-
       he current camera view is low and facing a black bag. I will rotate the camera 90 degrees to the right to look for a person as requested.
   Tips: |-
-    - It looks at the environment and infers whether there are people.
+    - It looks at the environment and infers whether there are people. 
 
 
 

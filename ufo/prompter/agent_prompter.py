@@ -51,7 +51,7 @@ class ApplicationAgentPrompter(BasicPrompter):
     
 
 
-    def user_content_construction(self, image_list: list, request_history: list, action_history: list, prev_plan: str, user_request: str,distance:int, retrieved_docs: str="") -> list[dict]:
+    def user_content_construction(self, image_list: list, request_history: list, action_history: list, prev_plan: str, user_request: str,distance:float, retrieved_docs: str="") -> list[dict]:
         """
         Construct the prompt for LLMs.
         :param image_list: The list of images.
@@ -175,7 +175,7 @@ class ActionAgentPrompter(BasicPrompter):
     
 
 
-    def user_prompt_construction(self, request_history: list, action_history: list, control_item: list, prev_plan: str, user_request: str, retrieved_docs: str="") -> str:
+    def user_prompt_construction(self, request_history: list, action_history: list, distance: float, prev_plan: str, user_request: str, retrieved_docs: str="") -> str:
         """
         Construct the prompt for action selection.
         :param prompt_template: The template of the prompt.
@@ -186,7 +186,7 @@ class ActionAgentPrompter(BasicPrompter):
         return: The prompt for action selection.
         """
         prompt = self.prompt_template["user"].format(action_history=json.dumps(action_history), request_history=json.dumps(request_history), 
-                                            control_item=json.dumps(control_item), prev_plan=prev_plan, user_request=user_request, retrieved_docs=retrieved_docs)
+                                            distance=distance, prev_plan=prev_plan, user_request=user_request, retrieved_docs=retrieved_docs)
         
         return prompt
     

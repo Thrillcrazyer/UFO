@@ -20,7 +20,7 @@ class robot_api(object):
     
     def _receive_distance(self):
         distance_info = self.conn.recv(16)
-        distance = float(distance_info.decode().strip())/100
+        distance = float(distance_info.decode().strip())
         return distance
     
     def _receive_frame(self):

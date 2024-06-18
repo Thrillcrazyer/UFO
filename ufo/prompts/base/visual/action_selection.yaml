@@ -64,7 +64,7 @@ system: |-
 
 user: |-
   {retrieved_docs}
-  <Available Control Item:> {control_item}
+  <Distance ahead:> {distance}
   <Request History:> {request_history}
   <Step History:> {action_history}
   <Previous Plan:> {prev_plan}
