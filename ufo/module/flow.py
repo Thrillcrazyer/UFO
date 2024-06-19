@@ -68,7 +68,7 @@ class Session(object):
         welcome_text = """
 Welcome to use CA Robo🛸, A Decision Maker for Robot Control System using LLM. 
 {art}
-Please enter your request to be completed🛸: """.format(art=text2art("CA"))
+Please enter your request to be completed🛸: """.format(art=text2art("CA ROBO"))
 
         print_with_color(welcome_text, "cyan")
         
