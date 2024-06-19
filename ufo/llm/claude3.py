@@ -23,7 +23,7 @@ class ClaudeService:
         model = "claude-3-opus-20240229"
         temperature = 0.0
         max_tokens = 2000
-        top_p = 0,0
+        top_p = 0.0
 
         try:
             response: Any = self.client.chat.completions.create(
