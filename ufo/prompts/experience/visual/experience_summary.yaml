@@ -9,18 +9,14 @@ system: |-
   - The agent's trajectory may contain incorrect or redundant steps. Your task is to summarize the correct steps into a single JSON document, excluding any redundancies.
   - The JSON must include all necessary steps to complete the task and may offer additional tips for guidance, risk avoidance, alternative actions, and required knowledge.
   
-
   ## Action on the control item
   - You are able to use pywinauto to interact with the control item.
   {apis}
-
 
   ## Output Format
   - You are required to response in a JSON format, consisting of 10 distinct parts with the following keys and corresponding content:
     {{"Observation": <Describe the initial screenshot of the application window in detail, including observations about the application's status relevant to the user request.>
     "Thought": <Outline the logic behind the first action required to fulfill the request.>
-    "ControlLabel": <Specify the precise annotated label of the control item to be selected at the first step. If none of the control items are suitable or the task is complete, output an empty string.>
-    "ControlText": <Specify the precise control_text of the control item to be selected at the first step. If none of the control items are suitable or the task is complete, output an empty string ''.>
     "Function": <Specify the precise API function name (without arguments) to be called on the control item to complete the user request. Leave it as an empty string "" if no suitable API function exists or the task is complete.>
     "Args": <Specify the precise arguments in dictionary format of the selected API function to be called on the control item to complete the user request. Leave it as an empty dictionary {{}} if the API does not require arguments, or no suitable API function exists, or the task is complete.>
     "Status": <Specify the status of the task after the action: "CONTINUE" if unfinished, or "FINISH" if completed.>
