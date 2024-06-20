@@ -5,11 +5,13 @@ from typing import Any, Optional
 
 
 class ClaudeService:
-    def __init__(self, ):
+    def __init__(self,configs):
+        self.data=configs["CLAUDE"]
         self.client = anthropic.Anthropic(
                 # defaults to os.environ.get("ANTHROPIC_API_KEY")
-                api_key=""
+                api_key=self.data["API_KEY"]
                 ) 
+        self.configs=configs
         
     def chat_completion(
         self,
@@ -20,10 +22,10 @@ class ClaudeService:
         top_p: Optional[float] = None,
         **kwargs: Any,
     ):
-        model = "claude-3-opus-20240229"
-        temperature = 0.0
-        max_tokens = 2000
-        top_p = 0.0
+        model = self.data["API_MODEL"]
+        temperature = self.configs["TEMPERATURE"]
+        max_tokens = self.configs["MAX_TOKENS"]
+        top_p = self.configs["TIMEOUT"]
 
         try:
             response: Any = self.client.chat.completions.create(

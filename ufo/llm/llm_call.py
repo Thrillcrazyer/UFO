@@ -36,6 +36,10 @@ def get_completion(messages, agent: str='APP', use_backup_engine: bool=True):
             from .openai import OpenAIService
             response, cost = OpenAIService(configs, agent_type=agent_type).chat_completion(messages)
             return response, cost
+        elif api_type.lower() in ['claude']:
+            from .claude3 import ClaudeService
+            response,cost = ClaudeService(configs).chat_completion(messages)
+            return response, cost
         else:
             raise ValueError(f'API_TYPE {api_type} not supported')
     except Exception as e:
